@@ -1,0 +1,67 @@
+.input {
+  margin: 10px;
+  width: 15%;
+}
+.center {
+  margin: auto;
+  width: 100%;
+  float: left;
+  display: flex;
+}
+.buttonf {
+  width: 15%;
+  margin: auto;
+}
+.show {
+clear: both;
+}
+.elem {
+  float: left;
+  margin-left: 20px;
+}
+.curs {
+  cursor: grabbing;
+}
+.border {
+  border: 3px solid darkslategray;
+  margin: 5px;
+  float: left;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  background-color: darkgray;
+  border-radius: .5rem;
+}
+.del {
+  float: left;
+}
+.withdel {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: auto;
+  clear: both;
+  background-color: darkgray;
+  border-radius: .5rem;
+  margin-top: 5px;
+}
+.pr {
+  margin-left: 10px;
+}
+.x {
+  text-decoration: line-through;
+}
+.xx {
+}
+.d {
+  float: left;
+  margin-right: 2px;
+  cursor: pointer;
+}
+.form {
+  max-width: 25%;
+  margin: auto;
+  float: left;
+  display: flex;
+}
