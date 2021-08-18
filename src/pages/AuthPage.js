@@ -1,16 +1,13 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios'
-import { useMessage } from '../hooks/message.hook';
 import { AuthContext } from '../context/AuthContext';
 
 const AuthPage = () => {
     const auth = useContext(AuthContext)
-    const message = useMessage()
     const [form, setForm] = useState ({
         email: '', password: ''
     })
-    
-    
+       
     useEffect(() => {
     window.M.updateTextFields()
     }, []);
@@ -27,7 +24,7 @@ const AuthPage = () => {
     const loginHandler = async () => {
         axios.post('http://localhost:5000/api/auth/login', {...form})
            .then(res => auth.login(res.data.token, res.data.userId));
-    }
+       }
 
     return (
         <div className="row">

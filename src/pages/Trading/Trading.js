@@ -1,16 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import List from './List';
 import ToDoForm from './SubmitForm';
 import {connect} from 'react-redux';
+import {createPost} from '../../redux/actions'
 import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
 
 
 const Trading = ({createPost, syncPosts}) => {
+    const auth = useContext(AuthContext)
 
   const [position, setPosition] = useState([])
+  const [appState, setAppState] = useState({})
 
   const addPosition = (nameOfCoin, valueOfCoins, numberOfCoins, plan) => {
-    let buyPrice, kof1, step1, step2, step3, profit
+    let buyPrice, kof1, step1, step2, step3
     buyPrice = valueOfCoins/numberOfCoins
     kof1 = valueOfCoins / "100" * plan + parseFloat(valueOfCoins)
     step1 = kof1/numberOfCoins
@@ -20,6 +24,7 @@ const Trading = ({createPost, syncPosts}) => {
       const newItem = {
         id: Math.random().toString(36).substr(2,9),
         name: nameOfCoin,
+        userId: auth.userId,
         val: valueOfCoins,
         amount: numberOfCoins,
         amount2: numberOfCoins,
@@ -35,32 +40,52 @@ const Trading = ({createPost, syncPosts}) => {
         d2: true,
         d3: true
       }
-      setPosition([...position, newItem])
-      axios.post('http://localhost:5000/position/add', {...newItem})
-           .then(res => console.log(res.data));
+      const savePosition = async () => {
+        setPosition([...position, newItem])
+        await axios.post('http://localhost:5000/position/add', {...newItem})
+             .then(res => console.log(res.data));
+    
+        
+      }
+      const ref = async () => {
+    await savePosition()
+    await refreshPosition()
+      }
+      ref()
     }
   }
-  useEffect(() => {
-    axios.post('http://localhost:5000/position/')
-    .then(res => {
-        if (res.datalength > 0) {
-            setPosition(res.data)
-        }
-    });
-  }, []);
+  const refreshPosition = async () => {
+  await axios.get('http://localhost:5000/position/')
+       .then(res => {  
+           const post = res.data           
+               setAppState(post)  
+               createPost(appState) 
+               console.log(appState) 
+       } )
+    }
+   useEffect(() => {
+     axios.get('http://localhost:5000/position/')
+     .then(res => {  
+         const post = res.data           
+             setAppState(post)   
+             console.log(appState)  
+     });
+   },[]);
+   const rawsMap = Object.values(appState).filter(raw => raw.userId === auth.userId)
 
     return (
         <div>
           <header>
             <ToDoForm addPosition={addPosition}/>
-              {syncPosts.map((rawsMap) => {
+            {Object.values(rawsMap).map((raws) => {
                 return (
-            <List
-              rawsMap={rawsMap}
-              />
-            )
-            })}
-          </header>
+                <List 
+                raws={raws}
+                refreshPosition={refreshPosition}
+                />
+                )
+            })}             
+           </header>
         </div>
     )
 }
@@ -71,4 +96,4 @@ const mapStateProps = state => {
   }
 }
 
-export default connect(mapStateProps, null)(Trading)
+export default connect(mapStateProps, {createPost})(Trading)

@@ -1,15 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import { connect } from 'react-redux';
-import {createPost, fetchPosts} from '../../redux/actions'
+import {fetchPosts} from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
-import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -45,7 +41,7 @@ const SubmitForm = ({addPosition}) => {
     dispatch(fetchPosts())
     }, [])
 
-    let crypto = Object.values(cryptoTab).filter(cryp => cryp.id == "eth-ethereum" || cryp.id == "btc-bitcoin" || cryp.id == "ada-cardano" || cryp.id == "cake-pancakeswap" || cryp.id == "dot-polkadot" || cryp.id == "xrp-xrp" || cryp.id == "bnb-binance-coin" || cryp.id == "matic-polygon" || cryp.id == "uni-uniswap")
+    let crypto = Object.values(cryptoTab).filter(cryp => cryp.id === "eth-ethereum" || cryp.id === "btc-bitcoin" || cryp.id === "ada-cardano" || cryp.id === "cake-pancakeswap" || cryp.id === "dot-polkadot" || cryp.id === "xrp-xrp" || cryp.id === "bnb-binance-coin" || cryp.id === "matic-polygon" || cryp.id === "uni-uniswap")
 
     //------------------
 

@@ -10,6 +10,7 @@ router.route('/').get((req, res) => {
 router.route('/add').post((req, res) => {
     const id = req.body.id;
     const name = req.body.name;
+    const userId = String(req.body.userId);
     const val = Number(req.body.val);
     const amount = Number(req.body.amount);
     const amount2 = Number(req.body.amount2);
@@ -28,6 +29,7 @@ router.route('/add').post((req, res) => {
     const newPosition = new Position({
         id,
         name,
+        userId,
         val,
         amount,
         amount2,
@@ -57,7 +59,7 @@ router.route('/:id').get((req, res) => {
 
 router.route('/:id').delete((req, res) => {
     Position.findByIdAndDelete(req.params.id)
-    .then(exercise => res.json("Position deleted"))
+    .then(position => res.json("Position deleted"))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -66,6 +68,7 @@ router.route('/update/:id').post((req, res) => {
     .then(position => {
     position.id = req.body.id;
     position.name = req.body.name;
+    position.UserId = String(req.body.UserId);   
     position.val = Number(req.body.val);
     position.amount = Number(req.body.amount);
     position.amount2 = Number(req.body.amount2);

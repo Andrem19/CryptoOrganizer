@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const positionSchema = new Schema({
     id: {type: String, required: true, unique: true},
     name: {type: String, required: true},
+    userId: {type: String, required: true},
     val: {type: Number, required: true},
     amount: {type: Number, required: true},
     amount2: {type: Number, required: true},
