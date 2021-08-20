@@ -1,17 +1,16 @@
 import React, {useState, useEffect, useContext} from 'react';
 import List from './List';
 import ToDoForm from './SubmitForm';
-import {connect} from 'react-redux';
-import {createPost} from '../../redux/actions'
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 
 
-const Trading = ({createPost, syncPosts}) => {
-    const auth = useContext(AuthContext)
+const Trading = () => {
+  const auth = useContext(AuthContext)
 
-  const [position, setPosition] = useState([])
-  const [appState, setAppState] = useState({})
+  const appState = auth.appState
+  const setAppState = auth.setAppState 
+  
 
   const addPosition = (nameOfCoin, valueOfCoins, numberOfCoins, plan) => {
     let buyPrice, kof1, step1, step2, step3
@@ -41,36 +40,23 @@ const Trading = ({createPost, syncPosts}) => {
         d3: true
       }
       const savePosition = async () => {
-        setPosition([...position, newItem])
+        setAppState([...appState, newItem])
         await axios.post('http://localhost:5000/position/add', {...newItem})
              .then(res => console.log(res.data));
-    
-        
       }
       const ref = async () => {
     await savePosition()
-    await refreshPosition()
+    await auth.refreshPosition()
       }
       ref()
     }
   }
-  const refreshPosition = async () => {
-  await axios.get('http://localhost:5000/position/')
-       .then(res => {  
-           const post = res.data           
-               setAppState(post)  
-               createPost(appState) 
-               console.log(appState) 
-       } )
-    }
+  
    useEffect(() => {
-     axios.get('http://localhost:5000/position/')
-     .then(res => {  
-         const post = res.data           
-             setAppState(post)   
-             console.log(appState)  
-     });
+     auth.refreshPosition()
+     console.log(appState)
    },[]);
+
    const rawsMap = Object.values(appState).filter(raw => raw.userId === auth.userId)
 
     return (
@@ -80,8 +66,7 @@ const Trading = ({createPost, syncPosts}) => {
             {Object.values(rawsMap).map((raws) => {
                 return (
                 <List 
-                raws={raws}
-                refreshPosition={refreshPosition}
+                raws={raws}                
                 />
                 )
             })}             
@@ -90,10 +75,4 @@ const Trading = ({createPost, syncPosts}) => {
     )
 }
 
-const mapStateProps = state => {
-  return {
-    syncPosts: state.posts.posts
-  }
-}
-
-export default connect(mapStateProps, {createPost})(Trading)
+export default Trading

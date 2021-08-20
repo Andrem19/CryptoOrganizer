@@ -1,0 +1,45 @@
+<div className="center">
+       <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="on">
+          <FormControl className={classes.formControl}>
+           <InputLabel id="demo-controlled-open-select-label">Coin</InputLabel>
+           <Select
+             labelId="demo-controlled-open-select-label"
+             id="demo-controlled-open-select"
+             open={open}
+             onClose={handleClose}
+             onOpen={handleOpen}
+             value={nameOfCoin}
+             onChange={handleChange}
+           >
+             <MenuItem value="">
+               <em>None</em>
+             </MenuItem>
+             {crypto.map((coin) => (
+             <MenuItem key={coin.id} value={coin.symbol}>{coin.name}</MenuItem>
+
+           ))}
+           </Select>
+         </FormControl>
+
+       <FormControl className="input">
+         <InputLabel htmlFor="component-simple">Amount</InputLabel>
+         <Input id="component-simple" type='number' onKeyDown={handlekeyPress} value={valueOfCoins} onChange={event => setValueOfCoins(event.target.value)} />
+       </FormControl>
+
+       <FormControl className="input">
+         <InputLabel htmlFor="component-simple">Num. of coins</InputLabel>
+         <Input id="component-simple" type='number' onKeyDown={handlekeyPress} value={numberOfCoins} onChange={event => setNumberOfCoins(event.target.value)} />
+       </FormControl>
+
+       <FormControl className="input">
+         <InputLabel htmlFor="component-simple" >%</InputLabel>
+         <Input id="component-simple" type='number' onKeyDown={handlekeyPress} value={plan} onChange={event => setPlan(event.target.value)} />
+       </FormControl>
+       <Button style={{marginTop: 30}} type="submit" variant="contained">Submit</Button>       
+     </form>
+     </div>
+
+      var post = await Object.values(postApi).filter(cryp => cryp.userId === auth.userId)
+              await setMyAccount(post[0].apiKey)
+              await setSecret(post[0].apiSecret)
+                console.log(myAccount)

@@ -1,6 +1,9 @@
 .input {
   margin: 10px;
-  width: 15%;
+  margin-left: 20px;
+  margin-right: 20px;
+  max-width: 15%;
+  float: left;
 }
 .center {
   margin: auto;
@@ -10,7 +13,7 @@
 }
 .buttonf {
   width: 15%;
-  margin: auto;
+  margin-top: 20px;
 }
 .show {
 clear: both;
@@ -64,4 +67,13 @@ clear: both;
   margin: auto;
   float: left;
   display: flex;
+}
+.FormControl {
+  border-bottom: 0px!important;
+}
+.chousecrypto {
+  min-width: 100px;
+}
+.label {
+  
 }

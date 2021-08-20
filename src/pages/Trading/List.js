@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { connect } from 'react-redux';
-import { useDispatch, useSelector } from 'react-redux';
-import {fetchPosts} from '../../redux/actions';
 import axios from 'axios'
+import { AuthContext } from '../../context/AuthContext';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -50,29 +49,29 @@ const ExpandableTableRow = ({ children, expandComponent, ...otherProps }) => {
   );
 };
 
-const List = ({syncPosts, raws, refreshPosition}) => {
-
+const List = ({ raws }) => {
+  const auth = useContext(AuthContext)
  
   const classes = useStyles();
 
   
   //Fetch cryptoList
-  const dispatch = useDispatch()
-  const cryptos = useSelector((state) => {
-    return state.posts.fetchedPosts
-  })
+  const [cryptos, setCryptos] = useState({})
   useEffect(() => {
-  dispatch(fetchPosts())
-  }, [])
+    auth.getCrypto()
+    setCryptos(auth.coins)
+}, []);
+
   //Delete Position
 
   const deletePost = async (id) => {
     await axios.delete('http://localhost:5000/position/'+id)
     .then(res => console.log(res.data));
-    refreshPosition()
+    auth.refreshPosition()
   }
   //Update styles
-    const [postius1, setPostius1] = useState({
+    const postius = (co1, co2, co3, d1, d2, d3, st) => {
+    return {
     id: raws.id,
     name: raws.name,
     userId: raws.userId,
@@ -80,71 +79,35 @@ const List = ({syncPosts, raws, refreshPosition}) => {
     amount: raws.amount,
     amount2: raws.amount2,
     pl: raws.pl,
-    buyPrice: raws.step1,
+    buyPrice: st,
     step1: raws.step1,
     step2: raws.step2,
     step3: raws.step3,
-    complete1: true,
-    complete2: false,
-    complete3: false,
-    d1: false,
-    d2: true,
-    d3: true
-  })
-  const [postius2, setPostius2] = useState({
-    id: raws.id,
-    name: raws.name,
-    userId: raws.userId,
-    val: raws.val,
-    amount: raws.amount,
-    amount2: raws.amount2,
-    pl: raws.pl,
-    buyPrice: raws.step2,
-    step1: raws.step1,
-    step2: raws.step2,
-    step3: raws.step3,
-    complete1: true,
-    complete2: true,
-    complete3: false,
-    d1: false,
-    d2: false,
-    d3: true
-  })
-  const [postius3, setPostius3] = useState({
-    id: raws.id,
-    name: raws.name,
-    userId: raws.userId,
-    val: raws.val,
-    amount: raws.amount,
-    amount2: raws.amount2,
-    pl: raws.pl,
-    buyPrice: raws.step3,
-    step1: raws.step1,
-    step2: raws.step2,
-    step3: raws.step3,
-    complete1: true,
-    complete2: true,
-    complete3: true,
-    d1: false,
-    d2: false,
-    d3: false
-  })
+    complete1: co1,
+    complete2: co2,
+    complete3: co3,
+    d1: d1,
+    d2: d2,
+    d3: d3
+  }
+}
   
   const updateStyles1 = async (_id) => {
-    await axios.post('http://localhost:5000/position/update/'+_id, postius1)
+    await axios.post('http://localhost:5000/position/update/'+_id, postius(true, false, false, false, true, true, raws.step1))
            .then(res => console.log(res.data));
-    refreshPosition()
+    auth.refreshPosition()
   }
   const updateStyles2 = async (_id) => {
-    await axios.post('http://localhost:5000/position/update/'+_id, postius2)
+    await axios.post('http://localhost:5000/position/update/'+_id, postius(true, true, false, false, false, true, raws.step2))
            .then(res => console.log(res.data));
-    refreshPosition()
+    auth.refreshPosition()
   }
   const updateStyles3 = async (_id) => {
-    await axios.post('http://localhost:5000/position/update/'+_id, postius3)
+    await axios.post('http://localhost:5000/position/update/'+_id, postius(true, true, true, false, false, false, raws.step3))
            .then(res => console.log(res.data));
-    refreshPosition()
+    auth.refreshPosition()
   }
+  //Filter current profit/lose
   const filt = Object.values(cryptos).filter(cryp => cryp.symbol === raws.name).map((n) => (n.quotes.USD.price))*raws.amount-raws.val
 
   const amountOfSell1 = raws.amount2-raws.val/raws.step1
