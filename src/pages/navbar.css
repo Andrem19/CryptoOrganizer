@@ -1,0 +1,37 @@
+.search {
+    max-width: 350px;
+    max-height: 45px;
+    margin-left: 300px;
+    float: left;
+    margin-top: 10px;
+}
+.face {
+    float: left;
+    margin-top: 10px;
+}
+.autocomplete {
+    position: absolute;
+    left: 0;
+    top: 50px;
+    width: 100%;
+    background: white;
+
+}
+.li {
+    clear: both; 
+    margin-left: 50px;
+    max-width: 200px;
+    background: white;
+    cursor: pointer;
+}
+.ul {
+    clear: both; 
+    margin-left: 250px;
+    max-width: 200px;
+}
+.menu {
+    float: right;
+}
+.icon {
+ margin-top: -10px;
+}

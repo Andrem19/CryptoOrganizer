@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import Info from './pages/Info/Info'
 import Trading from './pages/Trading/Trading'
 import AuthPage from './pages/AuthPage'
+import Trader from './pages/Trader/Trader'
 
 export const useRoutes = isAutentificated => {
     if (isAutentificated) {
@@ -19,7 +20,10 @@ export const useRoutes = isAutentificated => {
             <Route path="/trading/:id">
                 <Trading />
             </Route>
-                <Redirect to="/" />
+            <Route path="/trader">
+                <Trader />
+            </Route>
+                <Redirect to="/dashboard" />
         </Switch>
         )
     }

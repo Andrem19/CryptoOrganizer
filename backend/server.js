@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 const uri = process.env.ATLAS_URI2;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
     );
     const connection = mongoose.connection;
     connection.once('open', () => {
@@ -25,7 +25,3 @@ mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
 app.listen(port, () => {
     console.log('Server is running on port 5000...')
 })
-
-
-app.use('/api/auth', require('./routes/auth.routes'))
-app.use('/position', require('./routes/position'))

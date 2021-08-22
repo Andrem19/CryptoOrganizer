@@ -1,12 +1,18 @@
 import {useState} from "react"
 import axios from "axios"
 
+
+
 export const Fetch = () => {
     const [data, setData] = useState({})
     const [coins, setCoins] = useState({})
     const [appState, setAppState] = useState({})
     const [postApi, setPostApi] = useState({})
-    
+    const [myAccount, setMyAccount] = useState({})
+    const [myAccFiltred, setMyAccFiltred] = useState({})
+    const [users, setUsers] = useState({})
+    const [myUser, setMyUser] = useState({})
+    const [mail, setMail] = useState('')
 
     const getPosition = async () => {
     await axios.get('http://localhost:5000/position/')
@@ -37,5 +43,12 @@ export const Fetch = () => {
                  setPostApi(post)  
          } )
     }
-      return {data, getPosition, getCrypto, coins, appState, setAppState, refreshPosition, postApi, setPostApi, getApi }
+    const getUsers = async () => {
+      await axios.get('http://localhost:5000/api/auth/')
+           .then(res => {  
+               const post = res.data           
+                   setUsers(post)  
+           } )                
+           } 
+      return {data, getPosition, getCrypto, coins, appState, setAppState, refreshPosition, postApi, setPostApi, getApi, setMyAccount, myAccount, myAccFiltred, setMyAccFiltred, users, getUsers, myUser, setMyUser, mail, setMail}
         }

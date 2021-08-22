@@ -1,16 +1,19 @@
 import React, {useState, useContext, useEffect} from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios'
-import ListFutures from './ListFutures';
-const Binance = require('node-binance-api');
+
+
 
 const storageName = 'apiKeys'
 
 const AddMyPosition = () => {
     const auth = useContext(AuthContext)
+
+
     // Const save
     const [apiKey, setApiKey] = useState('')
     const [secretKey, setSecretKey] = useState('')
+  
 
     //Handle Submit
     const handleSubmit = async () => {
@@ -25,7 +28,7 @@ const AddMyPosition = () => {
         }   
           await saveApi() 
      }
-    
+
     return (
         <div>
             <p>To continue add your Binance API</p>

@@ -44,6 +44,11 @@ try {
     res.status(500).json({ message: 'Something goes wrong, try ones again...'})
 }
 })
+router.route('/').get((req, res) => {
+    User.find()
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json('Error: ' + err))
+})
 // /api/auth/login
 router.post(
     '/login',

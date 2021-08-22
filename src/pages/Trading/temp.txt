@@ -43,3 +43,15 @@
               await setMyAccount(post[0].apiKey)
               await setSecret(post[0].apiSecret)
                 console.log(myAccount)
+
+        <div>
+          <div className="search"><input onChange={handleChange} id="superSearch"  /></div><div className="face"><i class="material-icons">search</i></div>
+          <ul className="ul">
+            {userFilter.map(us => {
+              return (
+               <li className="li">{us.email}</li>
+              )
+            })}
+            
+          </ul>
+        </div>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useEffect, useContext } from 'react';
 import List from './List';
 import ToDoForm from './SubmitForm';
 import axios from 'axios';
