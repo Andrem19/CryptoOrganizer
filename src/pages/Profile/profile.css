@@ -1,0 +1,23 @@
+.avatar {
+    max-width: 150px;
+    max-height: 150px;
+    margin-bottom: 5px;
+    float: left;
+}
+.avatar_container {
+    margin: 10px;
+}
+.input_file {
+    max-width: 200px;
+    margin-left: 10px;
+    clear: both;
+}
+.username {
+    float: left;
+    margin-top: -30px;
+    margin-left: 10px;
+}
+.button {
+    margin-left: 10px;
+    margin-top: 10px;
+}

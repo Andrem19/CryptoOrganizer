@@ -1,4 +1,6 @@
 const express = require("express");
+const bodyParser = require('body-parser');
+const multer = require('multer');
 
 const app = express();
 
@@ -13,6 +15,10 @@ app.use("/user", require("./routes/user"));
 app.use("/chatroom", require("./routes/room"));
 app.use('/position', require('./routes/position'))
 app.use('/apikeys', require('./routes/api.routes'))
+
+//images------------------
+app.use('/image', require('./routes/image'))
+//--------------
 
 //Error Handlers
 const errorHandlers = require("./handlers/errorHandler");
