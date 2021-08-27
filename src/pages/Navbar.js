@@ -29,9 +29,9 @@ console.log("Users: ", users)
   const delSearch = () => {
     setSearch("")
   }
-  const redirect = async (id, email) => {
+  const redirect = async (id, name) => {
     await auth.setMyUser(id)
-    await auth.setMail(email)
+    await auth.setName(name)
     history.push('/trader')
     setSearch('')
     
@@ -58,7 +58,7 @@ console.log("Users: ", users)
         {search.length > 1 ? (userFilter.slice(0, 3).map(info => (
                     <div  className="display">
                       <ul>
-                       <span onClick={() => redirect(info._id, info.email)} value={info._id} className="role li">{info.email}</span>
+                       <span onClick={() => redirect(info._id, info.name)} value={info._id} className="role li">{info.email}</span>
                       </ul>
                     </div>
                 ))) : (null) }

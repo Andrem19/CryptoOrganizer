@@ -44,7 +44,7 @@ const binance = new Binance().options({
 
       useEffect(() => {
       fetchData()
-      }, []);
+      }, [filt]);
 
     return (
        <div> 
@@ -59,7 +59,7 @@ const binance = new Binance().options({
     </TableRow>
   </TableHead>
   <TableBody>
-      {Object.values(myAccFiltred).map(pos => {
+      {Object.values(filt).map(pos => {
         return(
       <TableRow >
         <TableCell component="th" scope="row">{pos.symbol}</TableCell>

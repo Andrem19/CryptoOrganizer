@@ -9,7 +9,7 @@ import 'materialize-css'
 
 function App() {
   const {token, login, logout, userId} = useAuth()
-  const {mail, setMail, myUser, setMyUser, users, getUsers, data, coins, postApi, setPostApi, getApi, getPosition, getCrypto, appState, setAppState, refreshPosition, setMyAccount, myAccount, myAccFiltred, setMyAccFiltred} = Fetch()
+  const {name, setName, myUser, setMyUser, users, getUsers, data, coins, postApi, setPostApi, getApi, getPosition, getCrypto, appState, setAppState, refreshPosition, setMyAccount, myAccount, myAccFiltred, setMyAccFiltred} = Fetch()
   const isAutenticated = !!token
   const routes = useRoutes(isAutenticated)
 
@@ -37,8 +37,8 @@ function App() {
     getUsers,
     myUser,
     setMyUser,
-    mail,
-    setMail
+    name,
+    setName
 
   }
 

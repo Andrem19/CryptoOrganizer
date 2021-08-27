@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 const AuthPage = () => {
     const auth = useContext(AuthContext)
     const [form, setForm] = useState ({
-        email: '', password: ''
+        name: '', email: '', password: ''
     })
        
     useEffect(() => {
@@ -17,13 +17,14 @@ const AuthPage = () => {
     }
 
     const registerHandler = async () => {
-        axios.post('http://localhost:5000/api/auth/register', {...form})
+        axios.post('http://localhost:5000/user/register', {...form})
            .then(res => console.log(res.data));
     }
 
     const loginHandler = async () => {
-        axios.post('http://localhost:5000/api/auth/login', {...form})
+        axios.post('http://localhost:5000/user/login', {...form})
            .then(res => auth.login(res.data.token, res.data.userId));
+           console.log("userId: ", auth.userId)
        }
 
     return (
@@ -34,6 +35,20 @@ const AuthPage = () => {
           <div className="card-content white-text">
             <span className="card-title">Авторизация</span>
             <div>
+
+            <div className="input-field">
+                <input
+                  placeholder="Введите имя"
+                  id="text"
+                  type="text"
+                  name="name"
+                  className="yellow-input"
+                  value={form.name}
+                  onChange={changeHandler}
+                  
+                />
+                <label htmlFor="name">Name</label>
+              </div>
 
               <div className="input-field">
                 <input

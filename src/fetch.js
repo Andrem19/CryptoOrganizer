@@ -12,7 +12,7 @@ export const Fetch = () => {
     const [myAccFiltred, setMyAccFiltred] = useState({})
     const [users, setUsers] = useState({})
     const [myUser, setMyUser] = useState({})
-    const [mail, setMail] = useState('')
+    const [name, setName] = useState('')
 
     const getPosition = async () => {
     await axios.get('http://localhost:5000/position/')
@@ -44,11 +44,11 @@ export const Fetch = () => {
          } )
     }
     const getUsers = async () => {
-      await axios.get('http://localhost:5000/api/auth/')
+      await axios.get('http://localhost:5000/user/')
            .then(res => {  
                const post = res.data           
                    setUsers(post)  
            } )                
            } 
-      return {data, getPosition, getCrypto, coins, appState, setAppState, refreshPosition, postApi, setPostApi, getApi, setMyAccount, myAccount, myAccFiltred, setMyAccFiltred, users, getUsers, myUser, setMyUser, mail, setMail}
+      return {data, getPosition, getCrypto, coins, appState, setAppState, refreshPosition, postApi, setPostApi, getApi, setMyAccount, myAccount, myAccFiltred, setMyAccFiltred, users, getUsers, myUser, setMyUser, name, setName}
         }

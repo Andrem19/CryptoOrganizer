@@ -16,7 +16,7 @@ const post = Object.values(postApi).filter(cryp => cryp.userId === myUser)
 
     return (
         <div>
-        <div><h2>User: {auth.mail}</h2></div>
+        <div><h2>User: {auth.name}</h2></div>
         {post.length > 0 ?
         (<div>{post.map(raws => {
             return (

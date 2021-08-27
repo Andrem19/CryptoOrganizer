@@ -1,27 +1,78 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
+require("dotenv").config();
 
-require('dotenv').config();
+const mongoose = require("mongoose");
+mongoose.connect(process.env.DB2, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+});
 
-const app = express();
-const port = process.env.PORT || 5000;
+mongoose.connection.on("error", (err) => {
+  console.log("Mongoose Connection ERROR: " + err.message);
+});
 
-app.use(cors());
-app.use(express.json());
+mongoose.connection.once("open", () => {
+  console.log("MongoDB Connected!");
+});
 
-const uri = process.env.ATLAS_URI2;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
-    );
-    const connection = mongoose.connection;
-    connection.once('open', () => {
-        console.log("MongoDB database connection established successfully")
-    })
+//Bring in the models
+require("./models/user");
+require("./models/room");
+require("./models/msg");
+require("./models/position.model");
+require("./models/apiKeys.model");
 
-    app.use('/api/auth', require('./routes/auth.routes'))
-    app.use('/position', require('./routes/position'))
-    app.use('/apikeys', require('./routes/api.routes'))
+const app = require("./app");
+const port = 5000
+const server = app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
 
-app.listen(port, () => {
-    console.log('Server is running on port 5000...')
-})
+const io = require("socket.io")(server);
+const jwt = require("jwt-then");
+
+const Message = mongoose.model("Message");
+const User = mongoose.model("User");
+
+io.use(async (socket, next) => {
+  try {
+    const token = socket.handshake.query.token;
+    const payload = await jwt.verify(token, process.env.SECRET);
+    socket.userId = payload.id;
+    next();
+  } catch (err) {}
+});
+
+io.on("connection", (socket) => {
+  console.log("Connected: " + socket.userId);
+
+  socket.on("disconnect", () => {
+    console.log("Disconnected: " + socket.userId);
+  });
+
+  socket.on("joinRoom", ({ chatroomId }) => {
+    socket.join(chatroomId);
+    console.log("A user joined chatroom: " + chatroomId);
+  });
+
+  socket.on("leaveRoom", ({ chatroomId }) => {
+    socket.leave(chatroomId);
+    console.log("A user left chatroom: " + chatroomId);
+  });
+
+  socket.on("chatroomMessage", async ({ chatroomId, message }) => {
+    if (message.trim().length > 0) {
+      const user = await User.findOne({ _id: socket.userId });
+      const newMessage = new Message({
+        chatroom: chatroomId,
+        user: socket.userId,
+        message,
+      });
+      io.to(chatroomId).emit("newMessage", {
+        message,
+        name: user.name,
+        userId: socket.userId,
+      });
+      await newMessage.save();
+    }
+  });
+});
