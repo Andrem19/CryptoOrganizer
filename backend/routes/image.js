@@ -5,7 +5,7 @@ let Image = require('../models/image');
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, "../src/uploads/")
+        callback(null, "../public/uploads/")
     },
     filename: (req, file, callback) => {
         callback(null, file.originalname);
@@ -41,14 +41,13 @@ router.get("/:id", (req, res) => {
 });
 
 //update request
-router.put("/update/:id", upload.single("articleName"), (req, res) => {
+router.put("/update/:id", upload.single("articleImage"), (req, res) => {
     Image.findById(req.params.id)
     .then((images) => {
         images.userId = req.body.userId;
         images.articleImage = req.file.originalname;
 
-        images
-        .save()
+        images.save()
         .then(() =>res.json("Avatar updated!"))
         .catch((err) => res.status(400).json(`Error: ${err}`))
     })

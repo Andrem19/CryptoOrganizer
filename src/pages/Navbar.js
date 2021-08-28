@@ -69,6 +69,7 @@ console.log("Users: ", users)
         <ul id="nav-mobile" className="menu hide-on-med-and-down">
           <li><NavLink to="/dashboard">Dashboard</NavLink></li>
           <li><NavLink to="/Info">Info</NavLink></li>
+          <li><NavLink to="/predict">Predict</NavLink></li>
           <li><NavLink to="/trading/:id">Trading</NavLink></li>
           <li><NavLink to="/profile"><i class="material-icons">account_circle</i></NavLink></li>
           <li><a href="/" onClick={logoutHandler}>LogOut</a></li>

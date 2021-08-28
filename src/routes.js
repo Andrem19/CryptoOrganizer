@@ -7,6 +7,7 @@ import Trading from './pages/Trading/Trading'
 import AuthPage from './pages/AuthPage'
 import Trader from './pages/Trader/Trader'
 import Profile from './pages/Profile/Profile'
+import Predict from './pages/Predict/Predict'
 
 export const useRoutes = isAutentificated => {
     if (isAutentificated) {
@@ -26,6 +27,9 @@ export const useRoutes = isAutentificated => {
             </Route>
             <Route path="/profile">
                 <Profile />
+            </Route>
+            <Route path="/predict">
+                <Predict />
             </Route>
             <Redirect to="/dashboard" />
         </Switch>

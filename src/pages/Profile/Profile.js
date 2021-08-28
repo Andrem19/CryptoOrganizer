@@ -3,7 +3,7 @@ import './profile.css'
 import logo from './avatar.jpg'
 import axios from 'axios'
 import { AuthContext } from '../../context/AuthContext'
-
+import Update from './update'
 
 
 
@@ -14,7 +14,7 @@ const Profile = () => {
 
     const [uName, setUName] = useState('')
     const [file, setFile] = useState("")
-    const [ind, setInd] = useState(false)
+    const users = auth.users
     const myAvatar = auth.myAvatar
 
     const setItem = (event) => {
@@ -37,11 +37,12 @@ const Profile = () => {
             }   
               await saveImage() 
               setFile("")
-              setInd(true)
     }
     useEffect(async() => {
+        auth.getUsers()
         setUName(auth.userName)   
-        console.log("userName: ", uName)     
+        console.log("userName: ", uName)   
+        console.log(filtUser)  
     }, []);
 
     useEffect(async() => {
@@ -50,28 +51,37 @@ const Profile = () => {
     }, []);
 
     const filtAvatar = Object.values(myAvatar).filter(ava => ava.userId === userId)
-
+    const filtUser = Object.values(users).filter(us => us._id === userId)
     if (filtAvatar.length > 0) {
     return(
         <div className="container">
             
             {filtAvatar.map(ava => { return(
-                <div className="avatar_container" key={ava._id}><img className="avatar" src={`/uploads/${ava.articleImage}`} alt="..." /></div>
-                )})}
-                <div className="username"><h2>User: {uName} </h2></div>
+                
+                <div className="avatar_container" key={ava._id}> 
+                <Update 
+                oldAvatarId={ava._id} 
+                oldAvatarPath={ava.articleImage}
+                />
+                <img className="avatar" src={`/uploads/${ava.articleImage}`} alt="..." />
                 </div>
+                )})}
+                {filtUser.map(usr => { return(
+                <div className="username"><h2>User: {usr.name} </h2></div> )})}
+        </div>
     )
     } else {
     return (
         <div className="container">
             <div className="avatar_container"><img className="avatar" src={logo} alt={logo}/></div>
            
-            <div className="username"><h2>User: {uName} </h2></div>
+            {filtUser.map(usr => { return(
+                <div className="username"><h2>User: {usr.name} </h2></div> )})}
             <div className="input_file">
             <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div><input filename="articleImage" type="file" onChange={setItem} /></div>
             
-            <div className="button"><button type="submit">SEND FILE</button></div>
+            <div className="button"><button type="submit">--SEND FILE--</button></div>
             </form>
             </div>
         </div>
