@@ -13,6 +13,7 @@ export const Fetch = () => {
     const [users, setUsers] = useState({})
     const [myUser, setMyUser] = useState({})
     const [name, setName] = useState('')
+    const [myAvatar, setMyAvatar] = useState("")
 
     const getPosition = async () => {
     await axios.get('http://localhost:5000/position/')
@@ -50,5 +51,12 @@ export const Fetch = () => {
                    setUsers(post)  
            } )                
            } 
-      return {data, getPosition, getCrypto, coins, appState, setAppState, refreshPosition, postApi, setPostApi, getApi, setMyAccount, myAccount, myAccFiltred, setMyAccFiltred, users, getUsers, myUser, setMyUser, name, setName}
+    const getAvatar = async () => {
+        await axios.get('http://localhost:5000/image/')
+        .then(res => {  
+            const post = res.data           
+                setMyAvatar(post)
+    })
+}
+      return {data, getPosition, getCrypto, coins, appState, setAppState, refreshPosition, postApi, setPostApi, getApi, setMyAccount, myAccount, myAccFiltred, setMyAccFiltred, users, getUsers, myUser, setMyUser, name, setName, getAvatar, myAvatar}
         }

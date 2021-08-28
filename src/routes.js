@@ -27,7 +27,7 @@ export const useRoutes = isAutentificated => {
             <Route path="/profile">
                 <Profile />
             </Route>
-                <Redirect to="/dashboard" />
+            <Redirect to="/dashboard" />
         </Switch>
         )
     }

@@ -23,7 +23,7 @@ const AuthPage = () => {
 
     const loginHandler = async () => {
         axios.post('http://localhost:5000/user/login', {...form})
-           .then(res => auth.login(res.data.token, res.data.userId));
+           .then(res => auth.login(res.data.token, res.data.userId, res.data.userName));
            console.log("userId: ", auth.userId)
        }
 

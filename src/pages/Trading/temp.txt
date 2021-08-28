@@ -55,3 +55,7 @@
             
           </ul>
         </div>
+
+         (<div className="avatar_container"><img className="avatar" src={logo} alt={logo}/></div>) 
+         <Redirect to="/dashboard" />
+         <Redirect to="/" />

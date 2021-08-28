@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
  
 const imageSchema = new mongoose.Schema({
     userId: {type: String, required: true},
-    img: { type: String, required: true }
+    articleImage: { type: String, required: true }
 });
  
 //Image is a model which has a schema imageSchema

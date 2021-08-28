@@ -8,8 +8,8 @@ import {Navbar} from './pages/Navbar'
 import 'materialize-css'
 
 function App() {
-  const {token, login, logout, userId} = useAuth()
-  const {name, setName, myUser, setMyUser, users, getUsers, data, coins, postApi, setPostApi, getApi, getPosition, getCrypto, appState, setAppState, refreshPosition, setMyAccount, myAccount, myAccFiltred, setMyAccFiltred} = Fetch()
+  const {token, login, logout, userId, userName} = useAuth()
+  const {getAvatar, myAvatar, name, setName, myUser, setMyUser, users, getUsers, data, coins, postApi, setPostApi, getApi, getPosition, getCrypto, appState, setAppState, refreshPosition, setMyAccount, myAccount, myAccFiltred, setMyAccFiltred} = Fetch()
   const isAutenticated = !!token
   const routes = useRoutes(isAutenticated)
 
@@ -38,7 +38,10 @@ function App() {
     myUser,
     setMyUser,
     name,
-    setName
+    setName,
+    userName,
+    getAvatar,
+    myAvatar
 
   }
 
