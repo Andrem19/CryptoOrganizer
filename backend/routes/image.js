@@ -2,6 +2,10 @@ const express = require("express")
 const router = express.Router()
 const multer = require("multer")
 let Image = require('../models/image');
+const fs = require('fs')
+const { promisify } = require('util')
+
+const unlinkAsync = promisify(fs.unlink)
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -14,6 +18,19 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage})
 
+//del from folder
+router.post('/del/:file_to_delete', async (req, res) => {
+    
+    console.log('req.body: ',req.params.file_to_delete)
+
+    let path = `../public/uploads/${req.params.file_to_delete}`
+    fs.unlink(path, (err => {
+        if (err) console.log(err);
+        else {
+          console.log(`\nDeleted file: ${path}`);
+        }
+      }));
+})
 //getImage/
 router.get('/', (req, res) => {
     Image.find()
@@ -41,7 +58,7 @@ router.get("/:id", (req, res) => {
 });
 
 //update request
-router.put("/update/:id", upload.single("articleImage"), (req, res) => {
+router.put("/update/:id", upload.single("articleImage"), async (req, res) => {
     Image.findById(req.params.id)
     .then((images) => {
         images.userId = req.body.userId;
