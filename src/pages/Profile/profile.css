@@ -21,3 +21,6 @@
     margin-left: 0px;
     margin-top: 10px;
 }
+.chat {
+    clear: both;  
+}

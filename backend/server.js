@@ -27,7 +27,15 @@ const server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, {
+  allowEIO3: true,
+  cors: {
+    origin: true,
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
+});
+
 const jwt = require("jwt-then");
 
 const Message = mongoose.model("Message");
