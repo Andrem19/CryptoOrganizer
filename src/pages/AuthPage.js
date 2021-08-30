@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
+import { withRouter } from "react-router-dom";
 import axios from 'axios'
 import { AuthContext } from '../context/AuthContext';
 
@@ -23,9 +24,11 @@ const AuthPage = (props) => {
 
     const loginHandler = async () => {
         axios.post('http://localhost:5000/user/login', {...form})
-           .then(res => {
-             auth.login(res.data.token, res.data.userId, res.data.userName)
-             props.setupSocket()
+           .then((res) => {
+             auth.login(res.data.token, res.data.userId, res.data.userName);
+             localStorage.setItem("CC_Token", res.data.token);
+             props.setupSocket();
+             console.log("token: ", res.data.token)
             });
            console.log("userId: ", auth.userId)
        }
@@ -105,5 +108,5 @@ const AuthPage = (props) => {
     </div>
     );
 }
-  
-export default AuthPage;
+
+export default withRouter(AuthPage);

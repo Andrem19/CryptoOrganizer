@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const User = require('../models/user')
+const User = mongoose.model("User");
 const sha256 = require("js-sha256");
 const jwt = require("jwt-then");
 
@@ -39,7 +39,7 @@ exports.login = async (req, res) => {
 
   if (!user) throw "Email and Password did not match.";
 
-  const token = await jwt.sign({ userId: user.id }, process.env.SECRET);
+  const token = await jwt.sign({ id: user.id }, process.env.SECRET);
 
   res.json({ token, userId: user.id, userName: user.name });
 };

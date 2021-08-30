@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useContext} from 'react';
-import { connect } from 'react-redux';
 import axios from 'axios'
 import { AuthContext } from '../../context/AuthContext';
 
@@ -185,10 +184,6 @@ const List = ({ raws }) => {
     </div>
   )
 }
-const mapStateToProps = state => {
-  return {
-    syncPosts: state.posts.posts
-  }
-}
 
-export default connect(mapStateToProps, null)(List)
+
+export default List
