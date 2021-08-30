@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios'
 import { AuthContext } from '../context/AuthContext';
 
-const AuthPage = () => {
+const AuthPage = (props) => {
     const auth = useContext(AuthContext)
     const [form, setForm] = useState ({
         name: '', email: '', password: ''
@@ -23,7 +23,10 @@ const AuthPage = () => {
 
     const loginHandler = async () => {
         axios.post('http://localhost:5000/user/login', {...form})
-           .then(res => auth.login(res.data.token, res.data.userId, res.data.userName));
+           .then(res => {
+             auth.login(res.data.token, res.data.userId, res.data.userName)
+             props.setupSocket()
+            });
            console.log("userId: ", auth.userId)
        }
 
