@@ -27,7 +27,15 @@ const server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, {
+  allowEIO3: true,
+  cors: {
+    origin: true,
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
+});
+
 const jwt = require("jwt-then");
 
 const Message = mongoose.model("Message");
@@ -49,9 +57,9 @@ io.on("connection", (socket) => {
     console.log("Disconnected: " + socket.userId);
   });
 
-  socket.on("joinRoom", ({ chatroomId }) => {
+  socket.on("joinRoom", ({ chatroomId, userId }) => {
     socket.join(chatroomId);
-    console.log("A user joined chatroom: " + chatroomId);
+    console.log("A user joined chatroom: " + userId);
   });
 
   socket.on("leaveRoom", ({ chatroomId }) => {

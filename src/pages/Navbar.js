@@ -1,7 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react'
 import {NavLink, useHistory} from 'react-router-dom'
 import {AuthContext} from '../context/AuthContext'
-import axios from 'axios'
 import "./navbar.css"
 
 export const Navbar = () => {
@@ -71,6 +70,7 @@ console.log("Users: ", users)
           <li><NavLink to="/Info">Info</NavLink></li>
           <li><NavLink to="/predict">Predict</NavLink></li>
           <li><NavLink to="/trading/:id">Trading</NavLink></li>
+          <li><NavLink to="/dashboardChat">Chat</NavLink></li>
           <li><NavLink to="/profile"><i class="material-icons">account_circle</i></NavLink></li>
           <li><a href="/" onClick={logoutHandler}>LogOut</a></li>
         </ul>

@@ -4,7 +4,7 @@ import logo from './avatar.jpg'
 import axios from 'axios'
 import { AuthContext } from '../../context/AuthContext'
 import Update from './update'
-
+import Chat from './Chat'
 
 
 const Profile = () => {
@@ -63,11 +63,13 @@ const Profile = () => {
                 oldAvatarId={ava._id} 
                 oldAvatarPath={ava.articleImage}
                 />
+                
                 <img className="avatar" src={`/uploads/${ava.articleImage}`} alt="..." />
                 </div>
                 )})}
                 {filtUser.map(usr => { return(
                 <div className="username"><h2>User: {usr.name} </h2></div> )})}
+        <div className="chat"><Chat /></div>
         </div>
     )
     } else {

@@ -18,6 +18,7 @@ app.use('/apikeys', require('./routes/api.routes'))
 
 //images------------------
 app.use('/image', require('./routes/image'))
+app.use('/predict', require('./routes/predict'))
 //--------------
 
 //Error Handlers
